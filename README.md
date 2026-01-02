@@ -3,8 +3,6 @@
 
 # 特别说明
 &emsp;&emsp;hamibot只支持安卓设备。
-本人是安卓ios双持，主力是ios，在安卓上跑了脚本，在ios上用。
-
 
 # 快速开始
 1、hamibot如何安装使用，官网有介绍。https://docs.hamibot.com/guide/pairing-hamibot

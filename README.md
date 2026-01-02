@@ -3,7 +3,7 @@
 
 
 # 快速开始
-1.hamibot如何安装使用，官网有介绍。
+hamibot如何安装使用，官网有介绍。
 https://docs.hamibot.com/guide/pairing-hamibot
 
 把js代码扔到源码里，点击运行

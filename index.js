@@ -75,6 +75,40 @@ while (true) {
     }
 }
 
+function findRewardButton(timeoutMs) {
+    var deadline = new Date().getTime() + timeoutMs;
+
+    while (new Date().getTime() < deadline) {
+        var btn =
+            textContains("领取奖励").findOnce() ||
+            descContains("领取奖励").findOnce() ||
+            textMatches(/.*领取.*奖励.*/).findOnce() ||
+            descMatches(/.*领取.*奖励.*/).findOnce();
+
+        if (btn) return btn;
+        sleep(300);
+    }
+
+    return null;
+}
+
+function clickRewardButton(btn) {
+    if (btn) {
+        var current = btn;
+        for (var i = 0; current && i < 5; i++) {
+            if (current.clickable && current.clickable()) {
+                return current.click();
+            }
+            current = current.parent();
+        }
+
+        var b = btn.bounds();
+        return click(b.centerX(), b.centerY());
+    }
+
+    return click(device.width * 0.5, device.height * 0.55);
+}
+
 
 // ====================
 // 4. 广告处理 (含连播逻辑)
@@ -111,11 +145,15 @@ function waitAndCloseAd() {
         sleep(3000); // 这里的等待很重要，要等弹窗出来
 
         // 1. 如果出现【领取奖励】 -> 点击并继续下一轮
-        var continueBtn = textContains("领取奖励").findOne(2000) || descContains("领取奖励").findOne(2000);
-        if (continueBtn) {
-            log("✔ 触发连播：点击领取奖励");
-            click(continueBtn.bounds().centerX(), continueBtn.bounds().centerY());
-            // 点击后，直接跳回循环开头，继续等35秒
+      
+        var inRewardAdPage = currentActivity().indexOf("ExcitingVideoActivity") >= 0;
+
+        if (inRewardAdPage) {
+            log("✔ 关闭广告后仍在广告奖励页，盲点领取奖励区域");
+            var clickedByFallback = click(device.width * 0.5, device.height * 0.55);
+            log("领取奖励盲点结果: " + clickedByFallback);
+
+            sleep(2500);
             continue;
         }
 
@@ -131,6 +169,7 @@ function waitAndCloseAd() {
         // 如果没有"领取奖励"，也没"坚持退出"，说明已经自动回到了主页
         // 跳出循环
         log("广告流程结束");
+        break;
 
     }
 }

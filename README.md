@@ -79,9 +79,9 @@ Hamibot 配对和安装方式可参考官方文档：<https://docs.hamibot.com/g
 
 ## 联系方式
 
-有问题欢迎联系，扫码加我电报：
+有问题欢迎联系，加入电报群：
 
-![电报](电报.png)
+https://t.me/+WmHxS0gyKmU3NGQ1
 
 ## 更新日志
 
